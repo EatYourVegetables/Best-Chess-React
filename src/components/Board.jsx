@@ -26,18 +26,6 @@ class Board extends Component {
         };
     }
 
-    switchColor(index){
-        if(this.isEven(index)){
-            this.setState({
-                color: "white"
-            })
-        }else{
-            this.setState({
-                color: "black"
-            })
-        }
-    }
-
     isBlack(index) {
         if (positions[index].charCodeAt(0) % 2 == 0){
             if (Number(positions[index].charAt(1)) % 2 == 0){

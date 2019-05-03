@@ -10,7 +10,9 @@ import "./../styles/SquareStyle.css";
 class Square extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            gameStart: true
+        };
     }
 
     startPositions(width){
@@ -45,12 +47,20 @@ class Square extends Component {
 
     render() {
 
-        return <div 
-                className="square"
-                id= {this.props.position} 
-                style={{ width: this.props.width+ "px", height: this.props.width + "px", backgroundColor: this.props.squareColor}}>
-                {this.startPositions(this.props.width)}
-                </div>
+        return this.state.gameStart
+        ? <div 
+        className="square"
+        id= {this.props.position} 
+        style={{ width: this.props.width+ "px", height: this.props.width + "px", backgroundColor: this.props.squareColor}}>
+            {this.startPositions(this.props.width)}
+        </div>
+
+        : <div 
+        className="square"
+        id= {this.props.position} 
+        style={{ width: this.props.width+ "px", height: this.props.width + "px", backgroundColor: this.props.squareColor}}>
+            {this.startPositions(this.props.width)}
+        </div>
                 ;
     }
 }
