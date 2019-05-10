@@ -10,7 +10,7 @@ class Knight extends Component {
 
     render() {
 
-        return <div className="knight">
+        return <div className="knight" id={this.props.id}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"

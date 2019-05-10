@@ -22,21 +22,11 @@ class Board extends Component {
             blackSquareColor: "#09203f",
             blackPieceColor: "black",
             whitePieceColor: "white",
-            outlineColor: "gray"
+            whiteOutlineColor: "gray",
+            blackOutlineColor: "3b3b3b"
         };
     }
 
-    switchColor(index){
-        if(this.isEven(index)){
-            this.setState({
-                color: "white"
-            })
-        }else{
-            this.setState({
-                color: "black"
-            })
-        }
-    }
 
     isBlack(index) {
         if (positions[index].charCodeAt(0) % 2 == 0){
@@ -58,12 +48,14 @@ class Board extends Component {
 
                 
                 {positions.map((position, index) => {
+                    const isBlack = this.isBlack(index);
                     return <Square
                         width={this.state.boardWidth/8}
-                        squareColor={this.isBlack(index) ? this.state.blackSquareColor : this.state.whiteSquareColor}
+                        squareColor={isBlack ? this.state.blackSquareColor : this.state.whiteSquareColor}
                         colorWhite={this.state.whitePieceColor}
                         colorBlack={this.state.blackPieceColor}
-                        outline={this.state.outlineColor}
+                        whiteOutline={this.state.whiteOutlineColor}
+                        blackOutline={this.state.blackOutlineColor}
                         position= {position}
                         key= {position}
                     />
