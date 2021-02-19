@@ -24,7 +24,8 @@ export default class Draggable extends React.Component {
         window.addEventListener('mouseup', this.handleMouseUp);
 
         if (this.props.onDragStart) {
-            this.props.onDragStart();
+            // console.log("onDragStart")
+            // this.props.onDragStart();
         }
 
         this.setState({
@@ -37,7 +38,7 @@ export default class Draggable extends React.Component {
     handleMouseMove = ({ clientX, clientY }) => {
         const { isDragging } = this.state;
         const { onDrag } = this.props;
-
+        
         if (!isDragging) {
             return;
         }
@@ -70,6 +71,7 @@ export default class Draggable extends React.Component {
             },
             () => {
                 if (this.props.onDragEnd) {
+                    //console.log("ON DRAG END || pos = ", this.props.position)
                 }
             }
         );

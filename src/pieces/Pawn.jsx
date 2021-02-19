@@ -4,16 +4,32 @@ import "./../styles/PawnStyle.css";
 class Pawn extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            id: this.props.id
+        };
     }
 
+    componentDidMount() {
+        console.log("compDidMount")
+    }
+
+    // returnInfo = () => {
+    //     this.setState(
+    //         {id: this.props.id},
+    //         () => {
+    //             console.log(this.state)
+    //         }
+    //     );
+    // };
 
     render() {
 
         return <div
         className="pawn" 
         id={this.props.id}
-        onMouseUp={() => this.props.moveMade(this.props.position)}>
+        onMouseEnter={this.returnInfo}
+        //onMouseUp={() => this.props.moveMade(this.props.position)}
+        >
             <svg 
             xmlns="http://www.w3.org/2000/svg" 
             version="1.1"

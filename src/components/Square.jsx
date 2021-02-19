@@ -14,101 +14,154 @@ class Square extends Component {
         super(props);
         this.state = {
             squareID: "",
+            activePiece: "",
+            activePieceOrigSquare: "",
+            selectedSquare: "",
             gameBeginning: true
         };
     }
 
     startPositions(width){
         const pos = this.props.position;
-        if(pos.charAt(1) == '2'){
-            return <Pawn width={width} 
+        if(this.props.map[pos] === "wr"){
+            return <Rook width={width} 
             color={this.props.colorWhite} 
             outline={this.props.whiteOutline}
-            id={"wP-"+pos}
-            moveMade={this.moveMade}
+            id={"wr-"+pos}/>;
+        } else if (this.props.map[pos] === "br"){
+            return <Rook width={width} 
+            color={this.props.colorBlack} 
+            outline={this.props.blackOutline}
+            id={"br-"+pos}
             position={pos}/>;
-        }else if (pos.charAt(1) == '7'){
+        } else if (this.props.map[pos] === "wp"){
+            return <Pawn width={width} 
+            color={this.props.colorWhite} 
+            outline={this.props.whiteOutline}
+            id={"wp-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "bp"){
             return <Pawn width={width} 
             color={this.props.colorBlack} 
             outline={this.props.blackOutline}
-            id={"bP-"+pos}/>;
-        } else if (pos == 'a1' || pos == 'h1') {
-            return <Rook width={width} 
-            color={this.props.colorWhite} 
-            outline={this.props.whiteOutline}
-            id={"wR-"+pos}/>;
-        } else if (pos == 'a8' || pos == 'h8') {
-            return <Rook width={width} 
-            color={this.props.colorBlack} 
-            outline={this.props.blackOutline}
-            id={"bR-"+pos}/>;
-        } else if (pos == 'b1' || pos == 'g1') {
+            id={"bp-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "wkn"){
             return <Knight width={width} 
             color={this.props.colorWhite} 
             outline={this.props.whiteOutline}
-            id={"wKn-"+pos}/>;
-        } else if (pos == 'b8' || pos == 'g8') {
+            id={"wkn-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "bkn"){
             return <Knight width={width} 
             color={this.props.colorBlack} 
             outline={this.props.blackOutline}
-            id={"bKn-"+pos} />;
-        } else if (pos == 'c1' || pos == 'f1') {
+            id={"bkn-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "wb"){
             return <Bishop width={width} 
             color={this.props.colorWhite} 
             outline={this.props.whiteOutline}
-            id={"wB-"+pos} />;
-        } else if (pos == 'c8' || pos == 'f8') {
+            id={"wb-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "bb"){
             return <Bishop width={width} 
             color={this.props.colorBlack} 
             outline={this.props.blackOutline}
-            id={"bB-"+pos} />;
-        } else if (pos == 'd1') {
+            id={"bb-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "wq"){
             return <Queen width={width} 
             color={this.props.colorWhite} 
             outline={this.props.whiteOutline}
-            id={"wQ-"+pos} />;
-        } else if (pos == 'd8') {
+            id={"wq-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "bq"){
             return <Queen width={width} 
             color={this.props.colorBlack} 
             outline={this.props.blackOutline}
-            id={"bQ-"+pos} />;
-        } else if (pos == 'e1') {
+            id={"bq-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "wk"){
             return <King width={width} 
             color={this.props.colorWhite} 
             outline={this.props.whiteOutline}
-            id={"wKi-"+pos} />;
-        } else if (pos == 'e8') {
+            id={"wk-"+pos}
+            position={pos}/>;
+        } else if (this.props.map[pos] === "bk"){
             return <King width={width} 
             color={this.props.colorBlack} 
             outline={this.props.blackOutline}
-            id={"bKi-"+pos} />;
-        }     
+            id={"bk-"+pos}
+            position={pos}/>;
+        }
     }
 
-    moveMade(id){
-        console.log("I WAS CALLED", id);
-    }
 
-    // onDragEnd(id){
+    onClick = () => {
+        const pos = this.props.position;
+        this.props.selectSquare(pos);
+        if(this.props.map[pos] != ""){
+            this.props.saveActivePieceInfo(this.props.map[pos], pos);
+            this.setState(
+                {activePiece: this.props.map[pos], selectedSquare: pos, activePieceOrigSquare: pos},
+                () => {
+                    console.log("Selected square = "+
+                    this.state.selectedSquare+
+                    " Active Piece = "+ 
+                    this.state.activePiece+
+                    " Active Piece Orig Square = "+
+                    this.state.activePieceOrigSquare)
+                }
+            );
+        } else{
+            console.log("ELSE")
+            console.log("Active Piece info ELSE = ",this.props.activePiece, this.props.activePieceOrigPos)
+            if(this.props.activePiece != ""){
+                this.props.movePiece();
+            }
+        }
+    };
+    
+    componentDidUpdate(prevProps, prevState)
+    {
+        //onsole.log("UPDATED",prevState.map)
         
-    // }
+        //if()
+    }
 
     render() {
         // console.log("RENDERING");
+        //console.log("RENDER - selected square - "+this.state.selectedSquare+" props position square - "+this.props.position)
         return <div 
-                className="square"
-                id= {this.props.position}
-                onMouseEnter={() => this.setState({ squareID: this.props.position})}
-                style={{ 
-                    width: this.props.width+ "px", 
-                    height: this.props.width + "px", 
-                    backgroundColor: this.props.squareColor
-                    //,outline: "3px solid yellow"
-                    }}>
-                <Draggable
-                children={this.startPositions(this.props.width)}
-                />
-
+                    className="square"
+                    id= {this.props.position}
+                    //onMouseDown={this.onMouseDown}
+                    //onMouseUp={this.onMouseUp}
+                    onClick={this.onClick}
+                    //onMouseOver={this.onMouseOver}
+                    style={
+                        
+                        this.props.selectedSquare == this.props.position
+                        ?   { 
+                            width: this.props.width+ "px", 
+                            height: this.props.width + "px", 
+                            backgroundColor: this.props.squareColor,
+                            boxShadow: "inset 0px 0px 10px "+this.props.oppositeSquareColor,
+                            zIndex: "99"
+                            } 
+                        :   { 
+                            width: this.props.width+ "px", 
+                            height: this.props.width + "px", 
+                            backgroundColor: this.props.squareColor
+                            }
+                        }>
+                    {/* <Draggable
+                    onDrag={this.onDrag}
+                    onDragEnd={this.onMouseUp}
+                    children={this.startPositions(this.props.width)}
+                    /> */}
+                    {this.startPositions(this.props.width)}
                 </div>
                 ;
     }
