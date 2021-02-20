@@ -17,6 +17,7 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            boardFlipped: false,
             boardWidth: 500,
             whiteSquareColor: "#537895",
             blackSquareColor: "#09203f",
@@ -66,24 +67,31 @@ class Board extends Component {
         });
     }
 
-    movePiece = () => {
+    movePiece = pos => {
         console.log('MOVING PIECE')
         this.setState({
             map: {...this.state.map, 
                 [this.state.activePieceOrigPos]: "", 
-                [this.state.selectedSquare]: this.state.activePiece}
+                [pos]: this.state.activePiece},
+                activePiece: "",
+                activePieceOrigPos: "",
+                selectedSquare: ""
         },
         () => console.log(this.state.map, this.state.selectedSquare))
     }
 
     render() {
         return <section id="board-container">
-            <div id="board" style={{ width: this.state.boardWidth + "px", height: this.state.boardWidth + "px"}}>
+            <div id="board" 
+            style={this.state.boardFlipped
+            ? { width: this.state.boardWidth + "px", height: this.state.boardWidth + "px", transform: "rotate(180deg)"}
+            : { width: this.state.boardWidth + "px", height: this.state.boardWidth + "px"}}>
 
                 
                 {positions.map((position, index) => {
                     const isDark = this.isDark(index);
                     return <Square
+                        boardFlipped={this.state.boardFlipped}
                         width={this.state.boardWidth/8}
                         squareColor={isDark ? this.state.blackSquareColor : this.state.whiteSquareColor}
                         oppositeSquareColor={!isDark ? this.state.blackSquareColor : this.state.whiteSquareColor}

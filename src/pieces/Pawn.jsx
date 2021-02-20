@@ -28,6 +28,9 @@ class Pawn extends Component {
         className="pawn" 
         id={this.props.id}
         onMouseEnter={this.returnInfo}
+        style={this.props.boardFlipped
+        ? {transform: "rotate(180deg)"}
+        : {}}
         //onMouseUp={() => this.props.moveMade(this.props.position)}
         >
             <svg 
